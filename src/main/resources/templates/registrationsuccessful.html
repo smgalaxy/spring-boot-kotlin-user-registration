@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+  <title>Spring Framework Guru</title>
+
+  <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+  <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+  <div >
+    <h2>Patient Details</h2>
+    <table class="table table-striped">
+      <tr>
+
+        <th>Patient First Name</th>
+        <th>Patient Last Name</th>
+        <th>Email Id </th>
+
+      </tr>
+      <tr th:each="product : ${patient}">
+        <td th:text="${patient.id}"><a href="/patient/${patient.patientId}">Id</a></td>
+
+        <td th:text="${patient.patientFirstName}">Patient First Name</td>
+        <td th:text="${patient.patientLastName}">Patient Last Name</td>
+        <td th:text="${patient.patientEmail}">Patient Email Id</td>
+        <td><a th:href="${ '/patient/' + patient.patientId}">View</a></td>
+        <td><a th:href="${'/patient/edit/' + patient.patientId}">Edit</a></td>
+        <td><a th:href="${'/patient/delete/' + patient.patientId}">Delete</a></td>
+
+      </tr>
+    </table>
+
+  </div>
+</div>
+
+</body>
+</html>
