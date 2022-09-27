@@ -8,18 +8,26 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class PatientService(var patientRepository : PatientRepository){
+class PatientService(var patientRepository : PatientRepository) {
     //,var bCryptPasswordEncoder: BCryptPasswordEncoder
-    fun addPatient(patient: Patient) : Patient?{
+    fun addPatient(patient: Patient): Patient? {
 //        patient.patientPassword = bCryptPasswordEncoder.encode(patient.patientPassword)
 //        print("Inside patient service : ${patient.patientPassword}")
         return patientRepository.save(patient)
 
     }
+
     fun getByPatientEmail(email: String): Patient? {
         return patientRepository.findBypatientEmail(email)
     }
 
+    fun getBypatientPassword(password: String): Patient? {
+        return patientRepository.findBypatientPassword(password)
+    }
+    fun getByPatientEmailAndPassword(email : String, password: String) : Patient?{
+        return patientRepository.findBypatientEmailAndpatientPassword(email,password)
+    }
+}
 //    @Autowired
 //    private val passwordEncoder: PasswordEncoder? = null
 //
@@ -38,5 +46,5 @@ class PatientService(var patientRepository : PatientRepository){
 //        user.setRole(Role(Integer.valueOf(1), user))
 //        return repository.save(user)
 //    }
-}
+
 

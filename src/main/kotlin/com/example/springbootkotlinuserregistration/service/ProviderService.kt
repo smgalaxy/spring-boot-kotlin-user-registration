@@ -14,7 +14,13 @@ class ProviderService (val providerRepository: ProviderRepository){
     fun getByProviderEmail(email: String): Provider {
         return providerRepository.findByproviderEmail(email)
     }
+    fun getByProviderPassword(password: String): Provider {
+        return providerRepository.findByproviderPassword(password)
+    }
 
+    fun getByProviderEmailAndPassword(email: String,password: String):Provider?{
+        return providerRepository.findByproviderEmailAndproviderPassword(email, password)
+    }
     fun getAllProviders(): MutableIterable<Provider>? {
         return providerRepository.findAll()
     }

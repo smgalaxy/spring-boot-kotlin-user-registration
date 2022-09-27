@@ -8,6 +8,9 @@ interface PatientRepository : JpaRepository<Patient, Long> {
      fun save(patient: Patient): Patient
      fun findBypatientEmail(email:String) : Patient
 
+     fun findBypatientPassword(password:String) : Patient
+     fun findBypatientEmailAndpatientPassword(email : String, password: String) : Patient
+
 //     fun findByMailId(email : String): Optional<Patient>
 
 }

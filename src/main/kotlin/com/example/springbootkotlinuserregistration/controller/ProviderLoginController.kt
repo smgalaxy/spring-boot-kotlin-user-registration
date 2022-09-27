@@ -24,9 +24,12 @@ class ProviderLoginController (val providerService: ProviderService?) {
         //println("Model values : ${model.")
         val dbprovider: Provider? = providerService?.getByProviderEmail(provider.providerEmail)
         println("dbprovider : $dbprovider")
-
-        return if (dbprovider != null)
-            "loginsuccess"
+        val dbprovider1: Provider? = providerService?.getByProviderPassword(provider.providerPassword)
+        println("dbprovider : $dbprovider1")
+        return if (dbprovider != null && dbprovider1!=null){
+            model.addAttribute("provider",dbprovider)
+            "providerloginsuccess"
+        }
         else {
             println("dbprovider: $dbprovider")
             "providerloginnotfound"
