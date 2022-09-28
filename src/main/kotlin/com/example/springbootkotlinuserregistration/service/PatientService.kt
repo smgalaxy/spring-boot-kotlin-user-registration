@@ -18,11 +18,11 @@ class PatientService(var patientRepository : PatientRepository) {
 
     }
 
-    fun getByPatientEmail(email: String): Patient {
+    fun getByPatientEmail(email: String): Patient? {
         return patientRepository.findBypatientEmail(email)
     }
 
-    fun getBypatientPassword(password: String): Patient {
+    fun getBypatientPassword(password: String): Patient? {
         return patientRepository.findBypatientPassword(password)
     }
 //    fun getByPatientEmailAndPassword(email : String, password: String) : Patient?{
