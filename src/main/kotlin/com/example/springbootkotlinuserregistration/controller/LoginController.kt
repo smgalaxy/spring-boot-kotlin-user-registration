@@ -72,10 +72,12 @@ class LoginController (val patientService :PatientService?, var loginService : L
             println(">>metd userlogin()  after checkProviderLogin(user) after calling user verification in service : $verifiedUser")
         }
         model.addAttribute("verifieduser",verifiedUser)
-        return if(verifiedUser!=null)
-            "loginsuccess"
-        else
-            "loginnotfound"
+        return "loginsuccess"
+
+//        return if(verifiedUser!=null)
+//            "loginsuccess"
+//        else
+//            "loginnotfound"
 
 
     }
