@@ -11,10 +11,10 @@ class ProviderService (val providerRepository: ProviderRepository){
     fun addProvider(provider: Provider): Provider? {
         return providerRepository.save(provider)
     }
-    fun getByProviderEmail(email: String): Provider {
+    fun getByProviderEmail(email: String): Provider? {
         return providerRepository.findByproviderEmail(email)
     }
-    fun getByProviderPassword(password: String): Provider {
+    fun getByProviderPassword(password: String): Provider? {
         return providerRepository.findByproviderPassword(password)
     }
 
