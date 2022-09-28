@@ -8,12 +8,13 @@ import java.util.Optional
 
 interface PatientRepository : JpaRepository<Patient, Long> {
      fun save(patient: Patient): Patient
-     fun findBypatientEmail(email:String) : Patient
+     fun findBypatientEmail(email:String) : Patient?
 
-     fun findBypatientPassword(password:String) : Patient
+     fun findBypatientPassword(password:String) : Patient?
 //     @Query
-//          ("select * from registration.patient_table pat where pat.emailaddress = ?1 AND pat.password=?2")
-//     fun findColBypatientEmailAndpatientPassword(email : String, password: String) : Patient
+//          ("select patient from registration.patient_table patient"
+//          + "where patient.emailaddress = ?1 AND patient.password=?2")
+//     fun findColBypatientEmailAndpatientPassword(@Param email : String,@Param password: String) : Patient
 
 //     fun findByMailId(email : String): Optional<Patient>
 
