@@ -7,6 +7,7 @@ import com.example.springbootkotlinuserregistration.service.PatientService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 
 @Controller
@@ -55,26 +56,28 @@ class LoginController (val patientService :PatientService?, var loginService : L
 
     @RequestMapping(value = ["/login"], method = [RequestMethod.POST])
     fun userlogin(@ModelAttribute user: LoginUser?, model: Model): String? {
-        //var patientObj : Patient? = Patient()
+
+        var verifiedUser : LoginUser? = null
         model.addAttribute("user", user)
-        if (user != null) {
-            println("Hello ${user.userType}\r ${user.userEmail}\n${user.userPassword}")
+        println("usertype -> ${user?.userType} username -> ${user?.userEmail} userpassword -> ${user?.userPassword}")
+        if ((user?.userType) == "patient") {
+            verifiedUser = loginService.checkPatientLogin(user) as LoginUser?
+
+            println("inside login check after calling user verification in service : ${verifiedUser?.userName}")
+
         }
-        //service.method to check the user type
-        if (user != null && (user.userType).equals("patient")) {
-            var verifieduser = loginService.checkPatientLogin(user)
-            println("inside login check after calling user verification in service : $verifieduser")
-            model.addAttribute("verifieduser",verifieduser)
-            return "loginsuccess"
-        }
-        else if(user != null && (user.userType).equals("provider"))
+        else if((user?.userType) == "provider")
         {
-            var verifieduser = loginService.checkProviderLogin(user)
-            println("inside login check after calling user verification in service : $verifieduser")
-            model.addAttribute("verifieduser",verifieduser)
-            return "loginsuccess"
+           verifiedUser = loginService.checkProviderLogin(user)
+            println(">>metd userlogin()  after checkProviderLogin(user) after calling user verification in service : $verifiedUser")
         }
-       return null
+        model.addAttribute("verifieduser",verifiedUser)
+        return if(verifiedUser!=null)
+            "loginsuccess"
+        else
+            "loginnotfound"
+
+
     }
 }
 //    @RequestMapping(value = ["/loginProcess"], method = [RequestMethod.POST])

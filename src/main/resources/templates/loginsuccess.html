@@ -7,14 +7,17 @@
 </head>
 <body>
 <div align="center" >
-<!--    <p th:text="'id: ' + ${greeting.id}" />-->
-<!--    <p th:text="'content: ' + ${greeting.content}" />-->
-<!--    <p th:text="'id: ' + ${greeting.id}" />-->
+    <div th:if="${verifieduser} != 'null'">
+<!--    <div th:if="${not #isEmpty(verifieduser)}">-->
     <h2> Welcome !
-        <p th:text="${verifieduser.userName}" />
+        <p th:text="${verifieduser.userName}"></p>
        </h2>
     <h2>You have logged in successfully!</h2>
-    <h2><a href="/home"> Home</a></h2>
+    <h2><a href="/welcome"> Home</a></h2>
+    </div>
+    </div>
+<div th:if="${verifieduser} == 'null'">
+    <h2>Log in unsuccessful! Please <a href="/welcome">login</a> again</h2>
 </div>
 </body>
 </html>

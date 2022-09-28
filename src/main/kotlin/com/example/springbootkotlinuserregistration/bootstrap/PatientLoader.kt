@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 class PatientLoader(val patientRepository: PatientRepository?) : ApplicationListener<ContextRefreshedEvent> {
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
 
-        var patient : Patient = Patient()
+        val patient : Patient = Patient()
         patient.patientId = 111
         patient.patientFirstName = "Anil"
         patient.patientLastName = "Kulkarni"

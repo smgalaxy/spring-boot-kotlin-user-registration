@@ -82,9 +82,9 @@ a {
 
         <label>User Type : </label>
 
-        <select class="form-control" th:field="*{userType}" name="usertype">
-            <option th:value="'patient'" th:text = "Patient">Patient</option>
-            <option th:value="'provider'" th:text="Provider">Provider</option>
+        <select class="form-control" id="usertype" th:field="*{userType}" name="usertype">
+            <option value="patient" th:value="'patient'" th:text = "Patient">Patient</option>
+            <option value="provider" th:value="'provider'" th:text="Provider">Provider</option>
         </select>
         </label>
         <br></br>
@@ -98,10 +98,11 @@ a {
 
         <br></br>
         <button type="submit">Login</button>
-
-<!--        <h3><a th:href="${'/patient/new'}">Register here</a></h3>-->
-
-
+<!--        <td><a th:href="${ '/product/' + product.id}">View</a></td>-->
+<!--       <h3>New user? <label> Register here</label></h3>-->
+        <label>New User?</label>
+        <input type="submit" value="Register here!"
+               onclick="document.location.href = '/register/' + document.getElementById('usertype').value;" />
     </form>
 </div>
 </body>

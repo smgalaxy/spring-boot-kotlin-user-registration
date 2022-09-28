@@ -10,7 +10,7 @@ import org.springframework.ui.Model
 
 @Controller
 class ProviderController (val providerService: ProviderService?) {
-    @RequestMapping("/provider/new")
+    @RequestMapping("/register/provider")
     fun newProvider(model: Model): String? {
         model.addAttribute("provider", Provider())
         return "providerregistrationform"

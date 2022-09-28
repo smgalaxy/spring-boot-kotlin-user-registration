@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 @Controller
 class PatientController (val patientService: PatientService?) {
 
-    @RequestMapping("/patient/new")
+    @RequestMapping("/register/patient")
     fun newPatient(model: Model): String? {
         model.addAttribute("patient", Patient())
         return "patientregistrationform"
@@ -20,7 +20,7 @@ class PatientController (val patientService: PatientService?) {
     fun savePatient(patient: Patient): String? {
 
         patientService?.addPatient(patient)
-        return "success"
+        return "loginregistrationsuccess"
     }
 
 }

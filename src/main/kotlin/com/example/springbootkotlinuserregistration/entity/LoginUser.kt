@@ -1,7 +1,9 @@
 package com.example.springbootkotlinuserregistration.entity
 
+import org.springframework.stereotype.Component
 
-data class LoginUser(
+@Component
+ class LoginUser(
     var userName : String = "",
     var userEmail:String = "",
     var userPassword : String = "",

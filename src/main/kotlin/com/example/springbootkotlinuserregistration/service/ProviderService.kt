@@ -18,20 +18,20 @@ class ProviderService (val providerRepository: ProviderRepository){
         return providerRepository.findByproviderPassword(password)
     }
 
-    fun getByProviderEmailAndPassword(email: String,password: String):Provider?{
-        return providerRepository.findByproviderEmailAndproviderPassword(email, password)
-    }
-    fun getAllProviders(): MutableIterable<Provider>? {
-        return providerRepository.findAll()
-    }
-
-    fun updateProvider(patient: Provider): Provider {
-        return providerRepository.save(patient)
-    }
-
-    fun deleteProvider(provider: Provider): Unit? {
-        return providerRepository.delete(provider)
-    }
+//    fun getByProviderEmailAndPassword(email: String,password: String):Provider?{
+//        return providerRepository.findColByproviderEmailAndproviderPassword(email, password)
+//    }
+//    fun getAllProviders(): MutableIterable<Provider>? {
+//        return providerRepository.findAll()
+//    }
+//
+//    fun updateProvider(provider: Provider): Provider {
+//        return providerRepository.save(provider)
+//    }
+//
+//    fun deleteProvider(provider: Provider): Unit? {
+//        return providerRepository.delete(provider)
+//    }
 
 
 }
