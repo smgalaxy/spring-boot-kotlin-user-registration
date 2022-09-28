@@ -18,6 +18,9 @@ class ProviderService (val providerRepository: ProviderRepository){
         return providerRepository.findByproviderPassword(password)
     }
 
+    fun getByProviderEmailAndProviderPassword(email: String,password: String) : Provider?{
+        return providerRepository.findByProviderEmailAndProviderPassword(email,password)
+    }
 //    fun getByProviderEmailAndPassword(email: String,password: String):Provider?{
 //        return providerRepository.findColByproviderEmailAndproviderPassword(email, password)
 //    }

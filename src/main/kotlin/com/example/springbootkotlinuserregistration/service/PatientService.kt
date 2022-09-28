@@ -25,9 +25,9 @@ class PatientService(var patientRepository : PatientRepository) {
     fun getBypatientPassword(password: String): Patient? {
         return patientRepository.findBypatientPassword(password)
     }
-//    fun getByPatientEmailAndPassword(email : String, password: String) : Patient?{
-//        return patientRepository.findColBypatientEmailAndpatientPassword(email,password)
-//    }
+    fun getByPatientEmailAndPassword(email : String, password: String) : Patient?{
+        return patientRepository.findByPatientEmailAndPatientPassword(email,password)
+    }
 }
 //    @Autowired
 //    private val passwordEncoder: PasswordEncoder? = null

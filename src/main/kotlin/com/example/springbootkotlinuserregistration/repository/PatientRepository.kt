@@ -3,6 +3,7 @@ package com.example.springbootkotlinuserregistration.repository
 import com.example.springbootkotlinuserregistration.entity.Patient
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import java.util.Optional
 
 
@@ -11,10 +12,11 @@ interface PatientRepository : JpaRepository<Patient, Long> {
      fun findBypatientEmail(email:String) : Patient?
 
      fun findBypatientPassword(password:String) : Patient?
-//     @Query
-//          ("select patient from registration.patient_table patient"
+
+     fun findByPatientEmailAndPatientPassword(email:String, password:String) : Patient?
+//    @Query("select patient from registration.patient_table patient"
 //          + "where patient.emailaddress = ?1 AND patient.password=?2")
-//     fun findColBypatientEmailAndpatientPassword(@Param email : String,@Param password: String) : Patient
+//     fun findColBypatientEmailAndpatientPassword(@Param email : String, @Param password: String) : Patient
 
 //     fun findByMailId(email : String): Optional<Patient>
 

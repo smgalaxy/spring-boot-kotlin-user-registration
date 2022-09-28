@@ -12,6 +12,7 @@ interface ProviderRepository : JpaRepository<Provider, Long> {
     fun save(provider: Provider): Provider
     fun findByproviderEmail(email:String) : Provider?
     fun findByproviderPassword(password:String) : Provider?
+    fun findByProviderEmailAndProviderPassword(email: String,password: String) : Provider?
 //    @Query
 //        ("select * from registration.provider_table pro where pro.emailaddress = ?1 AND pro.password=?2")
 //    fun findColByproviderEmailAndproviderPassword(email: String,password: String) : Provider
