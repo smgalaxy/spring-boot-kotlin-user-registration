@@ -7,7 +7,7 @@
 </head>
 <body>
 <div align="center" >
-    <div th:if="${verifieduser} != 'null'">
+    <div th:if="${verifieduser} != null">
 <!--    <div th:if="${not #isEmpty(verifieduser)}">-->
     <h2> Welcome !
         <p th:text="${verifieduser.userName}"></p>
@@ -16,7 +16,7 @@
     <h2><a href="/welcome"> Home</a></h2>
     </div>
     </div>
-<div th:if="${verifieduser} == 'null'">
+<div align="center" th:if="${verifieduser} == null">
     <h2>Log in unsuccessful! Please <a href="/welcome">login</a> again</h2>
 </div>
 </body>
