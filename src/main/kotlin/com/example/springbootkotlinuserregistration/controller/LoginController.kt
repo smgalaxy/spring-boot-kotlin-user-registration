@@ -48,40 +48,44 @@ class LoginController (val patientService :PatientService?, var loginService : L
         return "patientregistrationform"
     }
 
-    @GetMapping("/welcome")
+    @GetMapping("/index")
     fun welcome(model: Model): String {
         model.addAttribute("user", LoginUser())
-        return "welcome"
+        return "index"
     }
 
-    @RequestMapping(value = ["/login"], method = [RequestMethod.POST])
+    @RequestMapping(value = ["/welcome"], method = [RequestMethod.POST])
     fun userlogin(@ModelAttribute user: LoginUser?, model: Model): String? {
 
-        var verifiedUser : LoginUser? = null
+        var verifiedUser: LoginUser? = LoginUser()
         model.addAttribute("user", user)
-        println("usertype -> ${user?.userType} username -> ${user?.userEmail} userpassword -> ${user?.userPassword}")
+
         if ((user?.userType) == "patient") {
-            verifiedUser = loginService.checkPatientLogin(user) as LoginUser?
-
-            println("inside login check after calling user verification in service : ${verifiedUser?.userName}")
-
+            verifiedUser = loginService.checkPatientLogin(user)
+            println(" login credentials check after calling user verification in service : ${verifiedUser?.userName}")
+        } else if ((user?.userType) == "provider") {
+            verifiedUser = loginService.checkProviderLogin(user)
+            println(">>metd userlogin()  after checkProviderLogin(user) " +
+                    "after calling user verification in service : $verifiedUser")
         }
-        else if((user?.userType) == "provider")
-        {
-           verifiedUser = loginService.checkProviderLogin(user)
-            println(">>metd userlogin()  after checkProviderLogin(user) after calling user verification in service : $verifiedUser")
-        }
-        model.addAttribute("verifieduser",verifiedUser)
-        return "loginsuccess"
 
-//        return if(verifiedUser!=null)
-//            "loginsuccess"
-//        else
-//            "loginnotfound"
+            println("userLogin(LoginController) >> verifiedUser.usertype : ${verifiedUser?.userType} ")
 
-
+            model.addAttribute("verifieduser", verifiedUser)
+            return "loginsuccess"
     }
 }
+
+//        if(verifiedUser!=null) {
+//            model.addAttribute("user", verifiedUser)
+//            return "loginsuccess"
+//        }
+//        else
+//        {
+//            model.addAttribute("user",verifiedUser)
+//            return "welcome"
+//        }
+
 //    @RequestMapping(value = ["/loginProcess"], method = [RequestMethod.POST])
 //    fun loginProcess(@ModelAttribute("login") user : UserDto?, model: Model) : String {
 //        model.addAttribute("user",user)
@@ -100,6 +104,12 @@ class LoginController (val patientService :PatientService?, var loginService : L
 //        return new ModelAndView("welcome", "firstname", user.getFirstname());
 //    }
 //}
+
+//        return if(verifiedUser!=null)
+//            "loginsuccess"
+//        else
+//            "loginnotfound"
+
 
 
 

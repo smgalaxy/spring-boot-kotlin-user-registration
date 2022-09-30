@@ -9,11 +9,12 @@ import java.util.*
 
 
 @Service
-class PatientService(var patientRepository : PatientRepository) {
-    //,var bCryptPasswordEncoder: BCryptPasswordEncoder
+class PatientService(var patientRepository : PatientRepository, var passwordEncoderService: PasswordEncryptionService) {
+
     fun addPatient(patient: Patient): Patient? {
-//        patient.patientPassword = bCryptPasswordEncoder.encode(patient.patientPassword)
-//        print("Inside patient service : ${patient.patientPassword}")
+        var encryptedPassword = passwordEncoderService.encryptPassword(patient.patientPassword).toString()
+        println("encrypted password: ${encryptedPassword}")
+        patient.patientPassword = encryptedPassword
         return patientRepository.save(patient)
 
     }

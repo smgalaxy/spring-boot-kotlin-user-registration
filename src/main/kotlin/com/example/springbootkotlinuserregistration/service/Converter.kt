@@ -12,14 +12,14 @@ class Converter(val user: LoginUser) {
         user.userEmail = patient.patientEmail
         user.userPassword = patient.patientPassword
         user.userName = patient.patientFirstName
-        user.userType = "verified"
+        user.userType = "patient"
         return user
     }
     fun copyProviderToLoginUser(provider: Provider) : LoginUser?{
         user.userEmail = provider.providerEmail
         user.userPassword = provider.providerPassword
         user.userName = provider.providerName
-        user.userType = "verified"
+        user.userType = "provider"
         return user
     }
 }

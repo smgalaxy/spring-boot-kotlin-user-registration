@@ -9,39 +9,33 @@ import org.springframework.stereotype.Service
 class LoginService(
     var patientService: PatientService?,
     var providerService: ProviderService?,
-    var converter: Converter?
+    var converter: Converter?,
+    var passwordEncoderService: PasswordEncryptionService
     ) {
 
     fun checkPatientLogin(user: LoginUser): LoginUser? {
-        println("user type : ${user.userType}")
-        val dbpatient : Patient? = patientService?.getByPatientEmailAndPassword(user.userEmail,user.userPassword)
+        var encryptedPassword = passwordEncoderService.encryptPassword(user.userPassword)
+        println("checkPatientLogin>>> encrpted password before hitting db $encryptedPassword")
+        val dbpatient : Patient? =
+            encryptedPassword?.let { patientService?.getByPatientEmailAndPassword(user.userEmail, it) }
+        // val dbpatient : Patient? =
+        // encryptedPassword?.let { patientService?.getByPatientEmailAndPassword(user.userEmail, it) }
         println("inside checkPatientLogin : after patient verification $dbpatient")
         if(dbpatient!=null)
             return converter?.copyPatientToLoginUser(dbpatient)
-
+        println("Loginservice : checkPatientLogin : user type : ${user.userType}")
         return null
     }
     fun checkProviderLogin(user: LoginUser): LoginUser? {
-        println("user type : ${user.userType}")
+        var encryptedPassword = passwordEncoderService.encryptPassword(user.userPassword)
+        println("checkProviderLogin>>> encrpted password before hitting db $encryptedPassword")
         val dbprovider: Provider? =
-            providerService?.getByProviderEmailAndProviderPassword(user.userEmail, user.userPassword)
+            encryptedPassword?.let { providerService?.getByProviderEmailAndProviderPassword(user.userEmail, it) }
 
         println("inside checkPatientLogin : after patient verification $dbprovider")
         if ( dbprovider != null) {
                 return converter?.copyProviderToLoginUser(dbprovider)
         }
         return null
-    }
-    fun anonymous()
-    {
-        //        val dbpatient: Patient? =
-//            patientService?.getByPatientEmailAndPassword(user.userEmail, user.userPassword)
-//        val dbpatient: Patient? = patientService?.getByPatientEmail(user.userEmail)
-        //        if (dbpatient != null && dbpatient1 != null) {
-//            if (dbpatient == dbpatient1)
-//                return converter?.copyPatientToLoginUser(dbpatient)
-//        }
-        //        val dbprovider:Provider? = providerService?.getByProviderEmail(user.userEmail)
-//        val dbprovider1:Provider? = providerService?.getByProviderPassword(user.userPassword)
     }
 }
