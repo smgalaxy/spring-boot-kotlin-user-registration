@@ -7,17 +7,64 @@
 </head>
 <body>
 <div align="center" >
-    <div th:if="${verifieduser} != null">
-<!--    <div th:if="${not #isEmpty(verifieduser)}">-->
+    <div th:if="${verifieduser} != null and ${verifieduser.userType}=='patient'">
+
     <h2> Welcome !
         <p th:text="${verifieduser.userName}"></p>
        </h2>
     <h2>You have logged in successfully!</h2>
-    <h2><a href="/welcome"> Home</a></h2>
+    <h2><a href="/index">Index</a></h2>
     </div>
+</div>
+<div align="center" >
+    <div th:if="${verifieduser} != null and ${verifieduser.userType}=='provider'">
+        <div align ="center">
+<!--            <label> Organisation details </label>-->
+            <h2><tr th:each="organisation : ${organisation}">
+                <td bgcolor="blue"><span th:text="${organisation.organisationName}"> Name, </span></td>
+                <td bgcolor="blue"><span th:text="${organisation.organisationAddress}"> Address </span></td>
+            </tr></h2>
+        </div>
+        <h2> Welcome !
+            <p th:text="${verifieduser.userName}"></p>
+        </h2>
+        <br>
+            <div th:if="${not #lists.isEmpty(patientslist)}" align ="center">
+                <label> <h4>Patients details</h4> </label>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Patient Id</th>
+                        <th>Patient First Name</th>
+                        <th>Patient Last Name</th>
+                        <th>Email</th>
+                        <th>Primary Complaint</th>
+                        <th>Select</th>
+                    </tr>
+                    <tr th:each="patient : ${patientslist}">
+                        <td th:text="${patient.patientId}"><a href="/">Id</a></td>
+                        <td th:text="${patient.patientFirstName}">Patient First Name</td>
+                        <td th:text="${patient.patientLastName}">Patient Last Name</td>
+                        <td th:text="${patient.patientEmail}"><a href = "mailto:">Patient Email</a></td>
+                        <td th:text="${patient.patientProblem}">Primary Complaint</td>
+<!--                        <td th:text="${patient.patientComplaint}">Complaint</td>-->
+                        <td><a th:href="${'/link/'+patient.patientId}">Select</a></td>
+<!--                        <td><a th:href="${'/product/edit/' + product.id}">Edit</a></td>-->
+                    </tr>
+                </table>
+<!--                <h2><tr th:each="patient : ${patientslist}">-->
+<!--                    <td bgcolor="blue"><span th:text="${patient.patientFirstName}"> Patient First Name </span></td>-->
+<!--                    <td bgcolor="blue"><span th:text="${patient.patientLastName}"> Patient Last Name  </span></td>-->
+<!--                    <td bgcolor="blue"><span th:text="${patient.patientEmail}"> Patient Email  </span></td>-->
+<!--                </tr></h2>-->
+            </div>
+        <h3><a href="/index">Index</a></h3>
     </div>
+</div>
 <div align="center" th:if="${verifieduser} == null">
-    <h2>Log in unsuccessful! Please <a href="/welcome">login</a> again</h2>
+    <h2>Invalid Email Id/Password
+        <br>
+        Please <a href="/index">login</a> again
+    </h2>
 </div>
 </body>
 </html>

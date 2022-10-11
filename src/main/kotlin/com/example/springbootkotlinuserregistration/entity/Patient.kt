@@ -1,17 +1,11 @@
 package com.example.springbootkotlinuserregistration.entity
 
 import org.jetbrains.annotations.NotNull
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.ManyToOne
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "Patient_table")
-data class Patient (
+class Patient (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var patientId: Long = 0,
@@ -26,5 +20,18 @@ data class Patient (
     var patientPassword: String = "",
     @Column(name = "emailaddress")
     @NotNull
-    var patientEmail:String = ""
+    var patientEmail:String = "",
+
+    @Column(name = "Problem_type")
+    @NotNull
+    var patientProblem : String = ""
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "provider_id", nullable = false)
+//
+
+    //    var provider: Provider? = Provider()
+
+//    @ManyToOne(cascade = [CascadeType.ALL])
+//    @JoinColumn(name = "organisation_id")
+//    var organisationId: Organisation = Organisation()
 )

@@ -72,37 +72,36 @@ a {
 </style>
 </head>
 <body>
-<h1>  Login Form </h1>
+<h1> Patient Login Form </h1>
 <div class="container" align="center">
 
-    <form class="form-horizontal" th:object="${user}" th:action="@{/login}" method="POST">
-        <input type="hidden" th:field="*{userName}"/>
+    <form class="form-horizontal" th:object="${patient}" th:action="@{/patientlogin}" method="POST">
         <h1>User Login</h1>
         <br></br>
 
         <label>User Type : </label>
-
-        <select class="form-control" id="usertype" th:field="*{userType}" name="usertype">
-            <option value="patient" th:value="'patient'" th:text = "Patient">Patient</option>
-            <option value="provider" th:value="'provider'" th:text="Provider">Provider</option>
-        </select>
+<!--            <select class="form-control" >th:field="*{usertype}">-->
+        <select class="form-control" name="usertype">
+                <option value="">Choose...</option>
+                <option value="patient">Patient</option>
+                <option value="provider">Provider</option>
+            </select>
         </label>
         <br></br>
         <label>Email ID : </label>
-        <input type="text" th:field="*{userEmail}" placeholder="Enter mail id" name="mailid" required>
+        <input type="text" th:field="*{patientEmail}" placeholder="Enter mail id" name="mailid" required>
         <br><br>
 
         <label>Password : </label>
-        <input type="password" th:field="*{userPassword}" placeholder="Enter Password" name="userpassword" required>
+        <input type="password" th:field="*{patientPassword}" placeholder="Enter Password" name="userpassword" required>
         <br><br>
 
         <br></br>
         <button type="submit">Login</button>
-<!--        <td><a th:href="${ '/product/' + product.id}">View</a></td>-->
-<!--       <h3>New user? <label> Register here</label></h3>-->
-        <label>New User?</label>
-        <input type="submit" value="Register here!"
-               onclick="document.location.href = '/register/' + document.getElementById('usertype').value;" />
+
+        <h3><a th:href="${'/patient/new'}">Register here</a></h3>
+
+
     </form>
 </div>
 </body>

@@ -22,6 +22,16 @@ class PatientLoader(
         patient.patientEmail = "anil@gmail.com"
         //encrypting the password and storing in the DataBase
         patient.patientPassword = passwordEncryptionService.encryptPassword("Anil@123").toString()
+        patient.patientProblem = "Chest Pain"
+        patientRepository?.save(patient)
+
+        patient.patientId = 122
+        patient.patientFirstName = "Sujitha"
+        patient.patientLastName = "Soman"
+        patient.patientEmail = "suji@gmail.com"
+        //encrypting the password and storing in the DataBase
+        patient.patientPassword = passwordEncryptionService.encryptPassword("Suji@123").toString()
+        patient.patientProblem = "Knee Pain"
         patientRepository?.save(patient)
 
     }

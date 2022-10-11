@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-  <title>Spring Framework Guru</title>
-  <style>
+    <title>Patient Registration Form</title>
+    <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: black;
@@ -68,45 +68,97 @@ a {
 }
 
 
-</style>
+
+    </style>
 </head>
 <body>
+
+<script>
+    function matchpassword(){
+        var firstpassword=document.f1.password1.value;
+        var secondpassword=document.f1.password2.value;
+
+        if(firstpassword==secondpassword){
+          return true;
+        }
+        else{
+          alert("Password must be same!");
+          return false;
+        }
+    }
+</script>
+
+
 <div class="container">
 
-  <h2>Sign up - Register here</h2>
-  <div>
-    <form class="form-horizontal" th:object="${patient}" th:action="@{/patient}" method="POST">
-      <input type="hidden" th:field="*{patientId}"/>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Patient First Name : </label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" th:field="*{patientFirstName}"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Patient Last Name : </label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" th:field="*{patientLastName}"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Email id : </label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" th:field="*{patientEmail}"/>
-        </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Password : </label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" th:field="*{patientPassword}"/>
-        </div>
-      </div>
+    <h2>Sign up - Register here</h2>
+    <div>
+        <form class="form-horizontal" th:object="${patient}" th:action="@{/patient}" method="POST" onsubmit="return matchpassword()">
+            <input type="hidden" th:field="*{patientId}"/>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Patient First Name : </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{patientFirstName}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Patient Last Name : </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{patientLastName}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Email id : </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{patientEmail}"/>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Password : </label>
+                    <div class="col-sm-10">
+                        <input type="password" name = "password1" class="form-control" th:field="*{patientPassword}"/>
+                    </div>
+                </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Repeat Password : </label>
+                <div class="col-sm-10">
+                  <input type="password" name="password2" class="form-control"/>
+                </div>
+              </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Primary Complaint : </label>
+                    <div class="col-sm-10">
+                        <input type="text" name = "primarycomplaint" class="form-control" th:field="*{patientProblem}"/>
+                    </div>
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <label>Select Provider : </label>-->
+<!--                <select class="form-control" id="providerslist" name="providerslist">-->
+<!--                    <option th:each="provider : ${providers}" th:value="${provider.providerId}" th:text="${provider.providerName}"></option>-->
+<!--                </select>-->
+<!--                </div>-->
 
-      </div>
-      <div class="row">
-        <button type="submit" class="btn btn-default">Submit</button>
-      </div>
-    </form>
-  </div>
+<!--                    <td th:text="${student.id}" />-->
+<!--                    <td th:text="${student.name}" />-->
+<!--                </tr>
+    <div class="form-group">
+        <label for="supplierName">Example select</label>
+        <select class="form-control" th:field="*{supplierName}">
+            <option th:each="name : ${suppliers}" th:value="${name}" th:text="${name}"></option>
+        </select>
+    </div>-->
+
+<!--                <div class="form-group">-->
+<!--                    <label name="providers">Select Providers : </label>-->
+<!--                    <select class="form-control" id="provider" th:field="*{providers}" name="providers">-->
+<!--                        <option value="patient" th:each="provider : ${providers}" th:value="${provider}" th:text = "${provider}"></option>-->
+<!--                    </select>-->
+<!--                </div>-->
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>

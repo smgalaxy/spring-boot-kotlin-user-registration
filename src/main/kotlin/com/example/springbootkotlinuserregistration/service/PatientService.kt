@@ -9,16 +9,19 @@ import java.util.*
 
 
 @Service
-class PatientService(var patientRepository : PatientRepository, var passwordEncoderService: PasswordEncryptionService) {
+class PatientService(var patientRepository : PatientRepository,
+                     var passwordEncoderService: PasswordEncryptionService,
+                     var organisationService: OrganisationService) {
 
     fun addPatient(patient: Patient): Patient? {
         var encryptedPassword = passwordEncoderService.encryptPassword(patient.patientPassword).toString()
         println("encrypted password: ${encryptedPassword}")
         patient.patientPassword = encryptedPassword
         return patientRepository.save(patient)
-
     }
-
+    fun getAllPatients() : MutableList<Patient>{
+        return patientRepository.findAll()
+    }
     fun getByPatientEmail(email: String): Patient? {
         return patientRepository.findBypatientEmail(email)
     }

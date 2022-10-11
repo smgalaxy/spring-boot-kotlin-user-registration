@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository
 
 interface ProviderRepository : JpaRepository<Provider, Long> {
     fun save(provider: Provider): Provider
+    override fun findAll() : MutableList<Provider>
     fun findByproviderEmail(email:String) : Provider?
     fun findByproviderPassword(password:String) : Provider?
     fun findByProviderEmailAndProviderPassword(email: String,password: String) : Provider?

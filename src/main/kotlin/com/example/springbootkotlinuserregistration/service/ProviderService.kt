@@ -14,6 +14,10 @@ class ProviderService (val providerRepository: ProviderRepository,var passwordEn
         provider.providerPassword = encryptedPassword
         return providerRepository.save(provider)
     }
+    fun getAllProviders() : MutableList<Provider>
+    {
+        return providerRepository.findAll()
+    }
     fun getByProviderEmail(email: String): Provider? {
         return providerRepository.findByproviderEmail(email)
     }

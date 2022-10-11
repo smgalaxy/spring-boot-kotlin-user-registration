@@ -32,7 +32,7 @@ class LoginService(
         val dbprovider: Provider? =
             encryptedPassword?.let { providerService?.getByProviderEmailAndProviderPassword(user.userEmail, it) }
 
-        println("inside checkPatientLogin : after patient verification $dbprovider")
+        println("inside checkPatientLogin : after provider verification $dbprovider")
         if ( dbprovider != null) {
                 return converter?.copyProviderToLoginUser(dbprovider)
         }

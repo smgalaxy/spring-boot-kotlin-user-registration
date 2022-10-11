@@ -1,7 +1,9 @@
 package com.example.springbootkotlinuserregistration.controller
 
+import com.example.springbootkotlinuserregistration.entity.Organisation
 import com.example.springbootkotlinuserregistration.entity.Patient
 import com.example.springbootkotlinuserregistration.entity.Provider
+import com.example.springbootkotlinuserregistration.service.OrganisationService
 import org.springframework.web.bind.annotation.*
 import com.example.springbootkotlinuserregistration.service.ProviderService
 import org.aspectj.apache.bcel.classfile.Module.Provide
@@ -9,7 +11,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 
 @Controller
-class ProviderController (val providerService: ProviderService?) {
+class ProviderController (val providerService: ProviderService?,
+                          val organisationService: OrganisationService) {
     @RequestMapping("/register/provider")
     fun newProvider(model: Model): String? {
         model.addAttribute("provider", Provider())
@@ -17,9 +20,15 @@ class ProviderController (val providerService: ProviderService?) {
     }
 
     @RequestMapping(value = ["/provider"], method = [RequestMethod.POST])
-    fun saveProvider(provider: Provider): String? {
+    fun saveProvider(provider: Provider, model:Model): String? {
         providerService?.addProvider(provider)
+        val organisations : MutableList<Organisation> = organisationService.getOrganisationDetails()
+        model.addAttribute("organisations",organisations)
         return "providerregistrationsuccess"
+    }
+    @PutMapping("/link/{id}")
+    fun linkPatientToProvider(@PathVariable id: Long){
+        println("Id value  = $id}")
     }
 //    @PostMapping("/provider")
 //    fun savePatient(@RequestBody provider: Provider): Provider? {

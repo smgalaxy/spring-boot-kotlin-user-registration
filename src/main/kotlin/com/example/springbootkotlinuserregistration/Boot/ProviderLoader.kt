@@ -1,5 +1,6 @@
 package com.example.springbootkotlinuserregistration.bootstrap
 
+import com.example.springbootkotlinuserregistration.entity.Patient
 import com.example.springbootkotlinuserregistration.entity.Provider
 import com.example.springbootkotlinuserregistration.repository.ProviderRepository
 import com.example.springbootkotlinuserregistration.service.PasswordEncryptionService
@@ -16,10 +17,13 @@ class ProviderLoader(
     ) : ApplicationListener<ContextRefreshedEvent>{
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
         var provider : Provider = Provider()
-        provider.providerName = "Apollo Hospitals-Chennai"
+        provider.providerName = "Dr.Arul"
         provider.providerId = 100
-        provider.providerPassword = passwordEncryptionService.encryptPassword("Apollo@2022").toString()
-        provider.providerEmail = "apollochennai@apollohospitals.com"
+        provider.providerPassword = passwordEncryptionService.encryptPassword("Arul@2022").toString()
+        provider.providerEmail = "aruld@gmail.com"
+        provider.providerType = "Cardiologist"
+        //providerRepository?.save(Provider(101,"aruld@gmail.com",
+          //  "Dr.Arul","Cardiologists"),Patient())
         providerRepository?.save(provider)
 
         var provider1 : Provider = Provider()
@@ -27,6 +31,7 @@ class ProviderLoader(
         provider1.providerId = 200
         provider1.providerPassword = passwordEncryptionService.encryptPassword("Praful@2022").toString()
         provider1.providerEmail = "prashanthd@mail.com"
+        provider1.providerType = "Ophthalmologist"
         providerRepository?.save(provider1)
     }
 

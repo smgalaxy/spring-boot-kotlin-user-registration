@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Organisation details</title>
+</head>
+<body>
+<div  class="container" align="center">
+<table>
+  <thead>
+  <tr>
+    <th><h2>Organisation Name </h2> </th>
+    <th><h2>Organisation Address </h2></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:if="${organisations.empty}">
+    <td colspan="2"> <h3>No Organisation Available</h3> </td>
+  </tr>
+  <tr th:each="organisation : ${organisations}">
+    <td><span th:text="${organisation.organisationName}"> Name </span></td>
+    <td><span th:text="${organisation.organisationAddress}"> Address </span></td>
+  </tr>
+  </tbody>
+</table>
+  <label><h2> <a href="/index">Index</a></h2></label>
+</div>
+</body>
+</html>
