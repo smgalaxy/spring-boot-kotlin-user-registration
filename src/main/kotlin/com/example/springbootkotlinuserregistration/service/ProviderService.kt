@@ -6,13 +6,22 @@ import org.springframework.stereotype.Service
 import com.example.springbootkotlinuserregistration.repository.ProviderRepository
 
 @Service
-class ProviderService (val providerRepository: ProviderRepository,var passwordEncryptionService: PasswordEncryptionService){
+class ProviderService (val providerRepository: ProviderRepository,
+                       val passwordEncryptionService: PasswordEncryptionService,
+                       val patientService: PatientService){
 
     fun addProvider(provider: Provider): Provider? {
-        var encryptedPassword = passwordEncryptionService.encryptPassword(provider.providerPassword).toString()
+        val encryptedPassword = passwordEncryptionService.encryptPassword(provider.providerPassword).toString()
         println("encrypted password: ${encryptedPassword}")
         provider.providerPassword = encryptedPassword
         return providerRepository.save(provider)
+
+    }
+    fun existsByUserEmail(userEmail : String): Int {
+        return providerRepository.existsByProviderEmail(userEmail)
+    }
+    fun addPatientToProvider(id : Long,email: String){
+        //providerRepository.addPatientById(id,email)
     }
     fun getAllProviders() : MutableList<Provider>
     {

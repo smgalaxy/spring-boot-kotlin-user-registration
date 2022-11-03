@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+  <title>Health Check up Registration</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+body {
+  background-color:white;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #38444d;
+}
+
+li {
+  float: left;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+body {
+  background-image: url('bg_4.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 50%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+
+</style>
+</head>
+<body>
+
+<script>
+    function matchpassword(){
+        var firstpassword=document.f1.password1.value;
+        var secondpassword=document.f1.password2.value;
+
+        if(firstpassword==secondpassword){
+          return true;
+        }
+        else{
+          alert("Password must be same!");
+          return false;
+        }
+    }
+</script>
+<div style="background-image: url('images/bg4.jpg');">
+
+  <ul>
+    <h2 align="center" >BlueStone Medic</h2>
+    <li><a href="#home">Home</a></li>
+    <li><a th:href="@{/about}">About</a></li>
+    <li class="dropdown">
+      <a href="javascript:void(0)" class="dropbtn">Departments</a>
+      <div class="dropdown-content">
+        <a href="#">Cardiology</a>
+        <a href="#">General Medicine</a>
+        <a href="#">Gastroenterology</a>
+        <a href="#">Ophthalmology</a>
+        <a href="#">Neurology</a>
+      </div>
+    </li>
+    <li><a href="/index">Sign in</a></li>
+  </ul>
+</div>
+<div class="container" align="center">
+
+  <h2>Master health check up registration</h2>
+<!--  <div  th:if="${errorMessage} != null"><label th:text="${errorMessage}"></label>-->
+<!--    <a href="/index">Login</a></div>-->
+<!--  <div>-->
+    <form class="form-horizontal" th:object="${hcpatient}" th:action="@{/hcpatient}" method="POST" onsubmit="return matchpassword()">
+      <input type="hidden" th:field="*{hcpatientId}"/>
+      <div class="form-group" align="left">
+        <label class="col-sm-2 control-label">Patient First Name : </label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" th:field="*{hcpatientFirstName}"/>
+        </div>
+      </div>
+      <div class="form-group" align="left">
+        <label class="col-sm-2 control-label">Patient Last Name : </label>
+        <div class="col-sm-10" >
+          <input type="text" class="form-control" th:field="*{hcpatientLastName}"/>
+        </div>
+      </div>
+      <div class="form-group" align="left">
+        <label class="col-sm-2 control-label">Email id : </label>
+        <div class="col-sm-10" >
+          <input type="text" class="form-control" th:field="*{hcpatientEmail}"/>
+        </div>
+        <div class="form-group" align="left">
+          <label class="col-sm-2 control-label">Password : </label>
+          <div class="col-sm-10">
+            <input type="password" name = "password1" class="form-control" th:field="*{hcpatientPassword}"/>
+          </div>
+        </div>
+        <div class="form-group" align="left">
+          <label class="col-sm-2 control-label">Age :  </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" th:field="*{hcpatientAge}"/>
+          </div>
+        </div>
+        <div class="form-group" align="left">
+          <label class="col-sm-2 control-label">Gender :  </label>
+          <div class="col-sm-10">
+            <select name="gender" id="gender" th:field="*{hcpatientGender}">
+              <option value="default" th:value="'D'">-Select Gender-</option>
+              <option value="Male" th:value="'M'">Male</option>
+              <option value="Female" th:value="'F'">Female</option>
+              <option value="Other" th:value="'O'">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" align="left">
+          <label class="col-sm-2 control-label">Choose a date :  </label>
+          <div class="col-sm-10">
+            <input type="date" class="form-control" th:field="*{hcDate}"/>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

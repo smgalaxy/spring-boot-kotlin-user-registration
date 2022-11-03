@@ -14,7 +14,6 @@ class PatientLoader(
     val passwordEncryptionService: PasswordEncryptionService
 ) : ApplicationListener<ContextRefreshedEvent> {
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
-
         val patient : Patient = Patient()
         patient.patientId = 111
         patient.patientFirstName = "Anil"
@@ -22,7 +21,8 @@ class PatientLoader(
         patient.patientEmail = "anil@gmail.com"
         //encrypting the password and storing in the DataBase
         patient.patientPassword = passwordEncryptionService.encryptPassword("Anil@123").toString()
-        patient.patientProblem = "Chest Pain"
+        //patient.patientProblem = "Chest Pain"
+
         patientRepository?.save(patient)
 
         patient.patientId = 122
@@ -31,7 +31,7 @@ class PatientLoader(
         patient.patientEmail = "suji@gmail.com"
         //encrypting the password and storing in the DataBase
         patient.patientPassword = passwordEncryptionService.encryptPassword("Suji@123").toString()
-        patient.patientProblem = "Knee Pain"
+        //patient.patientProblem = "Knee Pain"
         patientRepository?.save(patient)
 
     }

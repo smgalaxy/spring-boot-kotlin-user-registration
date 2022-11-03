@@ -1,14 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>User Login Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: black;
+<!--  background-image: url('/images/bg_4.jpg');-->
+  background-image: url('/about.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: grey;
+}
+
+li {
+  float: left;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+  background-color: grey;
+}
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+<!--  background-color: #f9f9f9;-->
+  background-color: powder blue;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
 
 * {
   box-sizing: border-box;
@@ -17,7 +74,7 @@ body {
 /* Add padding to containers */
 .container {
   padding: 16px;
-  background-color: white;
+  background-color: powder blue;
 }
 
 /* Full-width input fields */
@@ -68,11 +125,69 @@ a {
   text-align: center;
 }
 
-
 </style>
 </head>
-
 <body>
+<div style="background-image: url('images/bg4.jpg');">
+    <ul>
+<!--        <h2 align="center" >BlueStone Medic</h2>-->
+        <div align ="center">
+            <h2><tr th:each="organisation : ${organisation}">
+                <td><span th:text="${organisation.organisationName}"> Name </span></td>
+                </tr>
+            </h2>
+        </div>
+        <li><a href="#home">Home</a></li>
+        <li><a th:href="@{/about}">About</a></li>
+<!--        <li class="dropdown">-->
+<!--            <a href="javascript:void(0)" class="dropbtn">Departments</a>-->
+<!--            <div class="dropdown-content">-->
+<!--                <a href="#">Cardiology</a>-->
+<!--                <a href="#">General Medicine</a>-->
+<!--                <a href="#">Gastroenterology</a>-->
+<!--                <a href="#">Ophthalmology</a>-->
+<!--                <a href="#">Neurology</a>-->
+<!--            </div>-->
+<!--        </li>-->
+    </ul>
+</div>
+<div align="center">
+    <div class="img col-sm-12 col-lg-6">
+    </div>
+
+    <form name = "loginform" class="form-horizontal" th:object="${user}" th:action="@{/welcome}" method="POST" onclick = "validateform()">
+        <input type="hidden" th:field="*{userName}"/>
+
+        <h3><strong>User Login</strong></h3>
+        <br>
+        <div align="center" th:if="${error} == 'Invalid'">
+            <h4 color="red">Invalid Email/Password</h4>
+        </div>
+        <label><strong>User Type : </strong></label>
+
+        <select id="usertype" th:field="*{userType}" name="usertype">
+            <option value="patient" th:value="'patient'" th:text = "Patient">Patient</option>
+            <option value="provider" th:value="'provider'" th:text="Provider">Provider</option>
+        </select>
+
+        <br></br>
+        <label><strong>Email ID : </strong></label>
+        <input type="text" th:field="*{userEmail}" placeholder="Enter mail id" name="mailid" required>
+        <br><br>
+
+        <label><strong>Password : </strong></label>
+        <input type="password" th:field="*{userPassword}" placeholder="Enter Password" name="userpassword" required>
+        <br>
+        <br>
+        <br>
+        <h3>
+            <button type="submit">Login</button>
+            <label>New User?</label>
+            <input type="submit" value="Register here!"
+                   onclick="document.location.href = '/register/' + document.getElementById('usertype').value;" />
+        </h3>
+    </form>
+</div>
 <script>
     function validateform(){
         var mailid = document.loginform.mailid.value;
@@ -90,48 +205,5 @@ a {
         }
     }
 </script>
-<h1>  Login Form </h1>
-
-
-<div class="container" align="center">
-    <div align ="center">
-<!--        <label><a href = "/organisation"> Organisation details </a></label>-->
-        <h2><tr th:each="organisation : ${organisations}">
-            <td><span th:text="${organisation.organisationName}"> Name </span></td>
-<!--            <td><span th:text="${organisation.organisationAddress}"> Address </span></td>-->
-        </tr></h2>
-    </div>
-    <form name = "loginform" class="form-horizontal" th:object="${user}" th:action="@{/welcome}" method="POST" onclick = "validateform()">
-<!--        onsubmit="return validateform();">-->
-
-        <input type="hidden" th:field="*{userName}"/>
-
-        <h3>User Login</h3>
-        <br>
-
-        <label>User Type : </label>
-
-        <select class="form-control" id="usertype" th:field="*{userType}" name="usertype">
-            <option value="patient" th:value="'patient'" th:text = "Patient">Patient</option>
-            <option value="provider" th:value="'provider'" th:text="Provider">Provider</option>
-        </select>
-        </label>
-        <br></br>
-        <label>Email ID : </label>
-        <input type="text" th:field="*{userEmail}" placeholder="Enter mail id" name="mailid" required>
-        <br><br>
-
-        <label>Password : </label>
-        <input type="password" th:field="*{userPassword}" placeholder="Enter Password" name="userpassword" required>
-        <br><br>
-
-        <br></br>
-        <button type="submit">Login</button>
-
-        <label>New User?</label>
-        <input type="submit" value="Register here!"
-               onclick="document.location.href = '/register/' + document.getElementById('usertype').value;" />
-    </form>
-</div>
 </body>
 </html>

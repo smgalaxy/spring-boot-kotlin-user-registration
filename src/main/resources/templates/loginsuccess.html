@@ -1,70 +1,317 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Login Success</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <meta charset="UTF-8">
+    <title>Welcome page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+body {
+  background-color:white;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #38444d;
+}
+
+li {
+  float: left;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+body {
+  background-image: url('bg_4.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+</style>
 </head>
 <body>
-<div align="center" >
-    <div th:if="${verifieduser} != null and ${verifieduser.userType}=='patient'">
 
-    <h2> Welcome !
-        <p th:text="${verifieduser.userName}"></p>
-       </h2>
-    <h2>You have logged in successfully!</h2>
-    <h2><a href="/index">Index</a></h2>
-    </div>
-</div>
-<div align="center" >
-    <div th:if="${verifieduser} != null and ${verifieduser.userType}=='provider'">
-        <div align ="center">
-<!--            <label> Organisation details </label>-->
-            <h2><tr th:each="organisation : ${organisation}">
-                <td bgcolor="blue"><span th:text="${organisation.organisationName}"> Name, </span></td>
-                <td bgcolor="blue"><span th:text="${organisation.organisationAddress}"> Address </span></td>
-            </tr></h2>
-        </div>
-        <h2> Welcome !
-            <p th:text="${verifieduser.userName}"></p>
-        </h2>
-        <br>
-            <div th:if="${not #lists.isEmpty(patientslist)}" align ="center">
-                <label> <h4>Patients details</h4> </label>
-                <table class="table table-striped">
-                    <tr>
-                        <th>Patient Id</th>
-                        <th>Patient First Name</th>
-                        <th>Patient Last Name</th>
-                        <th>Email</th>
-                        <th>Primary Complaint</th>
-                        <th>Select</th>
-                    </tr>
-                    <tr th:each="patient : ${patientslist}">
-                        <td th:text="${patient.patientId}"><a href="/">Id</a></td>
-                        <td th:text="${patient.patientFirstName}">Patient First Name</td>
-                        <td th:text="${patient.patientLastName}">Patient Last Name</td>
-                        <td th:text="${patient.patientEmail}"><a href = "mailto:">Patient Email</a></td>
-                        <td th:text="${patient.patientProblem}">Primary Complaint</td>
-<!--                        <td th:text="${patient.patientComplaint}">Complaint</td>-->
-                        <td><a th:href="${'/link/'+patient.patientId}">Select</a></td>
-<!--                        <td><a th:href="${'/product/edit/' + product.id}">Edit</a></td>-->
-                    </tr>
-                </table>
-<!--                <h2><tr th:each="patient : ${patientslist}">-->
-<!--                    <td bgcolor="blue"><span th:text="${patient.patientFirstName}"> Patient First Name </span></td>-->
-<!--                    <td bgcolor="blue"><span th:text="${patient.patientLastName}"> Patient Last Name  </span></td>-->
-<!--                    <td bgcolor="blue"><span th:text="${patient.patientEmail}"> Patient Email  </span></td>-->
-<!--                </tr></h2>-->
-            </div>
-        <h3><a href="/index">Index</a></h3>
-    </div>
-</div>
+<!--if user credentials not found-->
 <div align="center" th:if="${verifieduser} == null">
     <h2>Invalid Email Id/Password
         <br>
         Please <a href="/index">login</a> again
     </h2>
 </div>
+<!--    if user is a patient -->
+    <div class="container" align="center">
+        <h2><tr th:each="organisation : ${organisation}">
+            <td bgcolor="blue"><span th:text="${organisation.organisationName}">  </span>
+            </td>
+        </h2>
+    </div>
+    <div th:if="${verifieduser} != null and ${verifieduser.userType}=='patient'">
+        <h3 align="right" ><label th:text="${verifieduser.userName}" ></label></h3>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="#news">About</a></li>
+<!--            <li class="dropdown">-->
+<!--                <a href="javascript:void(0)" class="dropbtn">Departments</a>-->
+<!--                <div class="dropdown-content">-->
+<!--                    <a href="#">Cardiology</a>-->
+<!--                    <a href="#">General Medicine</a>-->
+<!--                    <a href="#">Gastroenterology</a>-->
+<!--                    <a href="#">Ophthalmology</a>-->
+<!--                    <a href="#">Neurology</a>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li><a href="#">Doctors</a></li>-->
+            <li><a href="/healthcheckup">Health Checkup Registration</a></li>
+            <li><a href="#bookAppointment" onclick="openAppointment()"  data-toggle="modal">Book Appointment</a></li>
+
+            <li><a href="/logout">Logout</a></li>
+
+
+        </ul>
+
+        <div th:if="${appointments} != null">
+            <br>
+            <br>
+            <h3><strong>Appointments :</strong></h3>
+
+            <table class="table table-striped">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Email address</th>
+                    <th>Complaint</th>
+                    <th>Appointment Date</th>
+                    <th>Appointment Time</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr th:each="appointment : ${appointments}">
+                    <td th:text="${appointment.appointmentName}">Patient Name</td>
+                    <td th:text="${appointment.email}">Patient Email</td>
+                    <td th:text="${appointment.description}">Complaint</td>
+                    <td th:text="${appointment.date}">Patient Email</td>
+                    <td th:text="${appointment.time}">Complaint</td>
+                    <td><a th:href="${'/appointment/edit/' + appointment.patientId}">Edit</a></td>
+                    <td><a th:href="${'/appointment/delete/' + appointment.patientId}">Cancel</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div th:if="${verifieduser} != null and ${verifieduser.userType}=='provider'">
+        <h3 align="right" >@<label th:text="${verifieduser.userName}"></label>
+        </h3>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="#news">About</a></li>
+<!--            <li class="dropdown">-->
+<!--                <a href="javascript:void(0)" class="dropbtn">Departments</a>-->
+<!--                <div class="dropdown-content">-->
+<!--                    <a href="#">Cardiology</a>-->
+<!--                    <a href="#">General Medicine</a>-->
+<!--                    <a href="#">Gastroenterology</a>-->
+<!--                    <a href="#">Ophthalmology</a>-->
+<!--                    <a href="#">Neurology</a>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li><a href="#">Doctors</a></li>-->
+
+            <li><a href="/logout">Logout</a></li>
+
+        </ul>
+        <div th:if="${appointments} != null">
+            <br>
+            <br>
+            <h3><strong>Appointments :</strong></h3>
+        <table class="table table-striped">
+            <tr>
+
+                <th>Patient Name</th>
+                <th>Email address</th>
+                <th>Complaint</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="appointment : ${appointments}">
+                <td th:text="${appointment.appointmentName}">Patient Name</td>
+                <td th:text="${appointment.email}">Patient Email</td>
+                <td th:text="${appointment.description}">Complaint</td>
+                <td th:text="${appointment.date}">Patient Email</td>
+                <td th:text="${appointment.time}">Complaint</td>
+                <td><a th:href="${'/appointment/edit/' + appointment.patientId}">Edit</a></td>
+                <td><a th:href="${'/appointment/delete/' + appointment.patientId}">Delete</a></td>
+            </tr>
+        </table>
+        </div>
+    </div>
+
+    <div class="form-popup" id="myForm" >
+    <form th:action="@{/saveappointment}" th:object="${appointment}" method="POST" onsubmit="closeSelf();">
+        <h1>Book Appointment</h1>
+        <button type="button" class="close" data-dismiss="myForm" aria-label="Close" onclick="closeSelf();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <input type="hidden" th:field="*{patientId}" id="patientId" />
+        <div>
+            <label for="appointment_name" class="text-black">Full Name</label>
+            <input type="text" th:field="*{appointmentName}" placeholder="Full Name" class="form-control" id="appointment_name" />
+        </div>
+
+        <div >
+            <label for="appointment_email" class="text-black">Email</label>
+            <input type="text" th:field="*{email}" class="form-control" id="appointment_email" />
+        </div>
+
+        <div >
+            <label for="appointment_date" class="text-black">Date</label>
+
+            <input type="datetime-local" th:field="*{date}" class="form-control" id="appointment_date" placeholder="yyyy-MM-dd" />
+        </div>
+
+        <div>
+            <label for="appointment_message" class="text-black">Message</label>
+            <textarea th:field="*{description}" id="appointment_message" class="form-control" cols="30" rows="5">
+            </textarea>
+        </div>
+        <!--Listing patients-->
+        <div th:if="${not #lists.isEmpty(providers)}">
+            <div  align="left">
+                <label>Select Provider : </label>
+                <select class="form-control" th:field="*{providerId}" id="providerslist" name="providerslist" >
+<!--                    <option  text="Select Provider" th:value="0" th:text="Select Provider" selected></option>-->
+                   <option th:each="provider : ${providers}"  th:value="${provider.providerId}" th:text="${provider.providerName}+'-'+${provider.providerType}"></option>
+                </select>
+            </div>
+        </div>
+        <div >
+            <input type="submit" value="Send Message" class="btn btn-primary" />
+        </div>
+
+    </form>
+    </div>
+
+<script>
+function openAppointment() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+function closeSelf(){
+    self.close();
+    return true;
+}
+</script>
+
 </body>
 </html>

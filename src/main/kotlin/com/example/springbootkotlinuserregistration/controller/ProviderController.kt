@@ -20,16 +20,22 @@ class ProviderController (val providerService: ProviderService?,
     }
 
     @RequestMapping(value = ["/provider"], method = [RequestMethod.POST])
-    fun saveProvider(provider: Provider, model:Model): String? {
-        providerService?.addProvider(provider)
+    fun addProvider(provider: Provider, model:Model): String? {
         val organisations : MutableList<Organisation> = organisationService.getOrganisationDetails()
         model.addAttribute("organisations",organisations)
-        return "providerregistrationsuccess"
+
+        if (providerService?.existsByUserEmail(provider.providerEmail)!! >0) {
+            model.addAttribute("provider",Provider())
+            model.addAttribute("errorMessage","User Already Exists!")
+            return "providerregistrationform"
+        }
+        else {
+            providerService?.addProvider(provider)
+            model.addAttribute("errorMessage",null)
+            return "loginregistrationsuccess"
+        }
     }
-    @PutMapping("/link/{id}")
-    fun linkPatientToProvider(@PathVariable id: Long){
-        println("Id value  = $id}")
-    }
+
 //    @PostMapping("/provider")
 //    fun savePatient(@RequestBody provider: Provider): Provider? {
 //        //println("inside add patient")

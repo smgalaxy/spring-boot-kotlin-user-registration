@@ -14,13 +14,22 @@ class PatientService(var patientRepository : PatientRepository,
                      var organisationService: OrganisationService) {
 
     fun addPatient(patient: Patient): Patient? {
-        var encryptedPassword = passwordEncoderService.encryptPassword(patient.patientPassword).toString()
-        println("encrypted password: ${encryptedPassword}")
-        patient.patientPassword = encryptedPassword
-        return patientRepository.save(patient)
+
+            val encryptedPassword = passwordEncoderService.encryptPassword(patient.patientPassword).toString()
+            println("encrypted password: ${encryptedPassword}")
+            patient.patientPassword = encryptedPassword
+            return patientRepository.save(patient)
+
+    }
+
+    fun existsByUserEmail(userEmail : String): Int {
+        return patientRepository.existsByPatientEmail(userEmail)
     }
     fun getAllPatients() : MutableList<Patient>{
         return patientRepository.findAll()
+    }
+    fun addPatientById(id : Long) {
+
     }
     fun getByPatientEmail(email: String): Patient? {
         return patientRepository.findBypatientEmail(email)

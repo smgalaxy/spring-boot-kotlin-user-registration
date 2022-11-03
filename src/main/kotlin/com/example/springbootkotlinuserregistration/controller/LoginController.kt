@@ -1,11 +1,7 @@
 package com.example.springbootkotlinuserregistration.controller
 
-import com.example.springbootkotlinuserregistration.entity.LoginUser
-import com.example.springbootkotlinuserregistration.entity.Organisation
-import com.example.springbootkotlinuserregistration.entity.Patient
-import com.example.springbootkotlinuserregistration.service.LoginService
-import com.example.springbootkotlinuserregistration.service.OrganisationService
-import com.example.springbootkotlinuserregistration.service.PatientService
+import com.example.springbootkotlinuserregistration.entity.*
+import com.example.springbootkotlinuserregistration.service.*
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -15,74 +11,87 @@ import java.util.*
 @Controller
 class LoginController (val patientService :PatientService?,
                        val loginService : LoginService,
-                       val organisationService: OrganisationService) {
+                       val organisationService: OrganisationService,
+                       val providerService: ProviderService,
+                       val appointmentService: AppointmentService) {
+    @GetMapping("/home")
+    fun home() : String
+    {
+        return "home"
+    }
     @GetMapping("/index")
     fun welcome(model: Model): String {
-        val organisations = organisationService.getOrganisationDetails()
-        model.addAttribute("organisations", organisations)
+        val organisation = organisationService.getOrganisationDetails()
+        model.addAttribute("organisation", organisation)
         model.addAttribute("user", LoginUser())
         return "index"
     }
-
+    @RequestMapping("/about")
+    fun aboutPage() : String{
+        return "about"
+    }
+//    @RequestMapping("/department/cardiology")
+//    fun showcardiodept(){
+//        return ""
+//    }
+    @RequestMapping("/healthcheckup")
+    fun addHealthCheckUp(model: Model) : String{
+        model.addAttribute("hcpatient",HealthCheckupPatient())
+        return "Healthcheckup"
+    }
     @RequestMapping(value = ["/welcome"], method = [RequestMethod.POST])
     fun userlogin(@ModelAttribute user: LoginUser?, model: Model): String? {
-
         var verifiedUser: LoginUser? = LoginUser()
+        val organisation : MutableList<Organisation> = organisationService.getOrganisationDetails()
         model.addAttribute("user", user)
 
         if ((user?.userType) == "patient") {
             verifiedUser = loginService.checkPatientLogin(user)
-            println(" login credentials check after calling user verification in service : ${verifiedUser?.userName}")
+                println(" login credentials check after calling user verification in service : ${verifiedUser?.userName}")
+                println("verified user after checking the DB : $verifiedUser")
+            if(verifiedUser==null)
+            {
+                model.addAttribute("organisation",organisation)
+                model.addAttribute("user",LoginUser())
+                model.addAttribute("error","Invalid")
+                return "index"
+            }
+            val listOfProviders : MutableList<Provider> = providerService.getAllProviders()
+                println(">>>userlogin>>>>list of providers : ${listOfProviders.size}")
+            model.addAttribute("providers",listOfProviders)
+            val appointments = verifiedUser.let { appointmentService.getAppointmentByEmail(it.userEmail) }
+                println(">>Login controller>>userlogin>>$appointments")
+            model.addAttribute("appointments",appointments)
         } else if ((user?.userType) == "provider") {
             verifiedUser = loginService.checkProviderLogin(user)
             println(
                 ">>method userlogin()  after checkProviderLogin(user) " +
                         "after calling user verification in service : $verifiedUser"
             )
+            if(verifiedUser==null)
+            {
+                model.addAttribute("organisation",organisation)
+                model.addAttribute("user",LoginUser())
+                model.addAttribute("error","Invalid")
+                return "index"
+            }
+            val provider: Provider = providerService.getByProviderEmail(verifiedUser.userEmail)!!
+                println(">>Logincontroller >>userlogin>>providerId : $provider")
+            val providerId = provider.providerId
+                println(">>>>Logincontroller >>userlogin>>providerId : $providerId")
+            val appointments = providerId.let { appointmentService.getAppointmentById(it) }
+                println("appointment size >>> ${appointments.size}")
+            model.addAttribute("appointments",appointments)
         }
         println("userLogin(LoginController) >> verifiedUser.usertype : ${verifiedUser?.userType} ")
         model.addAttribute("verifieduser", verifiedUser)
-        val listOfPatients : MutableList<Patient>? = patientService?.getAllPatients()
-        model.addAttribute("patientslist",listOfPatients)
-        val organisation : MutableList<Organisation> = organisationService.getOrganisationDetails()
+
+//        val listOfPatients : MutableList<Patient>? = patientService?.getAllPatients()
+//        model.addAttribute("patientslist",listOfPatients)
+
+
         model.addAttribute("organisation",organisation)
+        model.addAttribute("appointment",Appointment())
         return "loginsuccess"
     }
 }
-//    @GetMapping("/home")
-//    fun home() = "home"
-//
-//    @GetMapping("/patientlogin")
-//    fun enterLoginDetails(model: Model): String {
-//        model.addAttribute("patient", Patient())
-//        return "index"
-//    }
-//
-//    @PostMapping("/patientlogin")
-//    fun loginValidation(@ModelAttribute patient: Patient, model: Model): String {
-//
-//        model.addAttribute("patient", patient)
-//        println("Email id is ${patient.patientEmail}")
-//        println("Model values : $model")
-//        val dbpatient: Patient? = patientService?.getByPatientEmail(patient.patientEmail)
-//        println(dbpatient)
-//        val dbpatient1: Patient? = patientService?.getBypatientPassword(patient.patientPassword)
-//        println(dbpatient1)
-//
-//        return if (dbpatient != null && dbpatient1 != null) {
-//            model.addAttribute("patient", dbpatient)
-//            "loginsuccess"
-//        } else {
-//            println("dbpatient: $dbpatient")
-//            "loginnotfound"
-//        }
-//    }
-//
-//    @GetMapping("/patientregistrationform")
-//    fun patientRegistration(model: Model): String {
-//        model.addAttribute("patient", Patient())
-//        return "patientregistrationform"
-//    }
-
-
-

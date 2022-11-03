@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Spring Framework Guru</title>
+    <title>Provider registration Form</title>
     <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -88,6 +88,9 @@ a {
 <div class="container">
 
     <h2>Sign up - Register here</h2>
+    <div  th:if="${errorMessage} != null"><label th:text="${errorMessage}"></label>
+        <a href="/index">Login</a></div>
+
     <div>
         <form class="form-horizontal" th:object="${provider}" th:action="@{/provider}" method="POST" onsubmit="return matchpassword()">
             <input type="hidden" th:field="*{providerId}"/>
@@ -120,7 +123,7 @@ a {
                 <label class="col-sm-2 control-label">Choose Provider Type : </label>
                     <div class="col-sm-10">
                         <select class="form-control" id="usertype" th:field="*{providerType}" name="providertype">
-                    <option value="doctor" th:value="'cardiologist'" th:text = "Cardiologist">Cardiologist</option>
+                    <option value="provider" th:value="'cardiologist'" th:text = "Cardiologist">Cardiologist</option>
                     <option value="provider" th:value="'orthopaedic'" th:text="Orthopaedic">Orthopaedics</option>
                     <option value="provider" th:value="'nutritionist'" th:text="Nutritionist">Nutritionist</option>
                     <option value="provider" th:value="'ophthalmologist'" th:text="Ophthalmologist">Ophthalmologists</option>

@@ -13,10 +13,9 @@ import org.springframework.stereotype.Component
 class ProviderLoader(
     val providerRepository: ProviderRepository?,
     val passwordEncryptionService: PasswordEncryptionService
-
     ) : ApplicationListener<ContextRefreshedEvent>{
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
-        var provider : Provider = Provider()
+        val provider: Provider = Provider()
         provider.providerName = "Dr.Arul"
         provider.providerId = 100
         provider.providerPassword = passwordEncryptionService.encryptPassword("Arul@2022").toString()
@@ -26,13 +25,21 @@ class ProviderLoader(
           //  "Dr.Arul","Cardiologists"),Patient())
         providerRepository?.save(provider)
 
-        var provider1 : Provider = Provider()
-        provider1.providerName = "Dr.Praful Dogre"
-        provider1.providerId = 200
-        provider1.providerPassword = passwordEncryptionService.encryptPassword("Praful@2022").toString()
-        provider1.providerEmail = "prashanthd@mail.com"
-        provider1.providerType = "Ophthalmologist"
-        providerRepository?.save(provider1)
+
+        provider.providerName = "Dr.Praful Dogre"
+        provider.providerId = 200
+        provider.providerPassword = passwordEncryptionService.encryptPassword("Praful@2022").toString()
+        provider.providerEmail = "prafuld@mail.com"
+        provider.providerType = "Ophthalmologist"
+        providerRepository?.save(provider)
+
+        provider.providerName = "Dr.Shiv kumar"
+        provider.providerId = 210
+        provider.providerPassword = passwordEncryptionService.encryptPassword("ShivKumar@2022").toString()
+        provider.providerEmail = "shivkdr@gmail.com"
+        provider.providerType = "Orthopaedics"
+        providerRepository?.save(provider)
     }
+
 
 }

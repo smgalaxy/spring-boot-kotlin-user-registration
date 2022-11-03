@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head lang="en">
     <meta charset="UTF-8">
     <title>Login Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: black;
+  background-color: powder blue;
+
 }
 
 * {
@@ -17,7 +18,7 @@ body {
 /* Add padding to containers */
 .container {
   padding: 16px;
-  background-color: white;
+  background-color: powder blue;
 }
 
 /* Full-width input fields */
@@ -68,41 +69,76 @@ a {
   text-align: center;
 }
 
+body {
+  background-image: url('/images/bg_4.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 
 </style>
 </head>
+
 <body>
-<h1> Patient Login Form </h1>
-<div class="container" align="center">
 
-    <form class="form-horizontal" th:object="${patient}" th:action="@{/patientlogin}" method="POST">
-        <h1>User Login</h1>
-        <br></br>
+<div align="center">
+    <div class="img col-sm-12 col-lg-6">
+    </div>
+    <div align ="center">
 
-        <label>User Type : </label>
-<!--            <select class="form-control" >th:field="*{usertype}">-->
-        <select class="form-control" name="usertype">
-                <option value="">Choose...</option>
-                <option value="patient">Patient</option>
-                <option value="provider">Provider</option>
-            </select>
-        </label>
+        <h2><tr th:each="organisation : ${organisations}">
+            <td><span th:text="${organisation.organisationName}"> Name </span></td>
+
+        </tr></h2>
+    </div>
+    <form name = "loginform" class="form-horizontal" th:object="${user}" th:action="@{/welcome}" method="POST" onclick = "validateform()">
+       <input type="hidden" th:field="*{userName}"/>
+
+        <h3><strong>User Login</strong></h3>
+        <br>
+
+        <label><strong>User Type : </strong></label>
+
+        <select class="form-control" id="usertype" th:field="*{userType}" name="usertype">
+            <option value="patient" th:value="'patient'" th:text = "Patient">Patient</option>
+            <option value="provider" th:value="'provider'" th:text="Provider">Provider</option>
+        </select>
+
         <br></br>
-        <label>Email ID : </label>
-        <input type="text" th:field="*{patientEmail}" placeholder="Enter mail id" name="mailid" required>
+        <label><strong>Email ID : </strong></label>
+        <input type="text" th:field="*{userEmail}" placeholder="Enter mail id" name="mailid" required>
         <br><br>
 
-        <label>Password : </label>
-        <input type="password" th:field="*{patientPassword}" placeholder="Enter Password" name="userpassword" required>
-        <br><br>
-
-        <br></br>
+        <label><strong>Password : </strong></label>
+        <input type="password" th:field="*{userPassword}" placeholder="Enter Password" name="userpassword" required>
+        <br>
+        <br>
+        <br>
+        <h3>
         <button type="submit">Login</button>
 
-        <h3><a th:href="${'/patient/new'}">Register here</a></h3>
-
-
+        <label>New User?</label>
+        <input type="submit" value="Register here!"
+               onclick="document.location.href = '/register/' + document.getElementById('usertype').value;" />
+        </h3>
     </form>
 </div>
+<script>
+    function validateform(){
+        var mailid = document.loginform.mailid.value;
+        var password = document.loginform.userpassword.value;
+
+        if(mailid == null || mailid == "")
+        {
+            alert("Name field can't be blank");
+            return false;
+        }
+        else if(password.length<6)
+        {
+            alert("Password must be atleast 6 characters long");
+            return false;
+        }
+    }
+</script>
 </body>
 </html>

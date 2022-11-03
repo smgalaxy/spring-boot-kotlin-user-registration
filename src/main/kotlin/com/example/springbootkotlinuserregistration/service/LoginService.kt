@@ -14,7 +14,7 @@ class LoginService(
     ) {
 
     fun checkPatientLogin(user: LoginUser): LoginUser? {
-        var encryptedPassword = passwordEncoderService.encryptPassword(user.userPassword)
+        val encryptedPassword = passwordEncoderService.encryptPassword(user.userPassword)
         println("checkPatientLogin>>> encrpted password before hitting db $encryptedPassword")
         val dbpatient : Patient? =
             encryptedPassword?.let { patientService?.getByPatientEmailAndPassword(user.userEmail, it) }
@@ -27,7 +27,7 @@ class LoginService(
         return null
     }
     fun checkProviderLogin(user: LoginUser): LoginUser? {
-        var encryptedPassword = passwordEncoderService.encryptPassword(user.userPassword)
+        val encryptedPassword = passwordEncoderService.encryptPassword(user.userPassword)
         println("checkProviderLogin>>> encrpted password before hitting db $encryptedPassword")
         val dbprovider: Provider? =
             encryptedPassword?.let { providerService?.getByProviderEmailAndProviderPassword(user.userEmail, it) }

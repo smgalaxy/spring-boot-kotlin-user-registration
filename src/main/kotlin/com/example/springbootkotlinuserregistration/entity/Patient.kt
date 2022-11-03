@@ -8,6 +8,7 @@ import javax.persistence.*
 class Patient (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "patient_id")
     var patientId: Long = 0,
     @Column(name = "firstname")
     @NotNull
@@ -20,18 +21,17 @@ class Patient (
     var patientPassword: String = "",
     @Column(name = "emailaddress")
     @NotNull
-    var patientEmail:String = "",
+    var patientEmail:String = ""
 
-    @Column(name = "Problem_type")
-    @NotNull
-    var patientProblem : String = ""
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "provider_id", nullable = false)
-//
-
-    //    var provider: Provider? = Provider()
+//    @ManyToOne
+//    @JoinColumn(name = "provider_id")
+//    var provider: Provider
 
 //    @ManyToOne(cascade = [CascadeType.ALL])
 //    @JoinColumn(name = "organisation_id")
 //    var organisationId: Organisation = Organisation()
-)
+) {
+    override fun toString(): String {
+        return "Patient(patientId=$patientId, patientFirstName='$patientFirstName', patientLastName='$patientLastName', patientPassword='$patientPassword', patientEmail='$patientEmail')"
+    }
+}

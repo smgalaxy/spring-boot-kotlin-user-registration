@@ -3,12 +3,17 @@ package com.example.springbootkotlinuserregistration.repository
 import com.example.springbootkotlinuserregistration.entity.Patient
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.query.Param
-import java.util.Optional
+import org.springframework.stereotype.Repository
 
-
+@Repository
 interface PatientRepository : JpaRepository<Patient, Long> {
-     fun save(patient: Patient): Patient
+
+    @Query("select count(*)\n" +
+            "from registration.patient_table \n" +
+            "where emailaddress = ?1", nativeQuery = true)
+    fun existsByPatientEmail(patientEmail: String): Int
+
+    fun save(patient: Patient): Patient
      fun findBypatientEmail(email:String) : Patient?
 
      fun findBypatientPassword(password:String) : Patient?
